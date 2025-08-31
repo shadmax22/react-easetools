@@ -1,4 +1,4 @@
-import { Modal } from "../../modal/modal";
+import { Modal } from "../../components/modal/Modal";
 
 export function ModalViewPage() {
   const openModal = async () => {

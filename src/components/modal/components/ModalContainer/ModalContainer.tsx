@@ -1,19 +1,24 @@
-import { modalType, use_MODAL_STATE_SLICE } from "../states/modal.state";
-import { setClass } from "../utils/ease";
-import { ModalReolver } from "./modal";
-import style from "./style/modal.module.css";
+import { setClass } from "../../../../utils/ease";
+import { MODAL_STATE } from "../../state/modal.state";
+import { ModalResolver } from "../../utils/modalResolver";
+import style from "../../style/modal.module.css";
 
 export function ModalContainer() {
-  const state = use_MODAL_STATE_SLICE();
-  const state_data = state.get();
-  const givenProps: modalType = state?.getProps();
+  const state_slice = MODAL_STATE();
+  const instances = state_slice?.getInstanceList();
+  const instance_id =
+    instances[instances.length > 0 ? instances.length - 1 : 0];
+  const modal_instance = state_slice.getInstance(instance_id);
+  if (!modal_instance) return <></>;
+
+  const givenProps = modal_instance.props;
 
   const animation_classess = {
     open: givenProps?.animation?.open ?? style["anim_slideTo_bottom_to_top"],
     close: givenProps?.animation?.close ?? style["anim_slideTo_top_to_bottom"],
   };
 
-  if (!state_data?.open) return <></>;
+  if (!modal_instance?.open) return <></>;
 
   return (
     <>
@@ -23,7 +28,7 @@ export function ModalContainer() {
           style["alert-container"],
           animation_classess.open,
           givenProps?.position ? style["pos_" + givenProps?.position] : "",
-          state_data?.hide ? style["anim_fade_out_slow"] : ""
+          modal_instance?.hide ? style["anim_fade_out_slow"] : ""
         )}
       >
         <div
@@ -33,7 +38,7 @@ export function ModalContainer() {
 
             style["alert-modal"],
             style["modal_" + givenProps?.size],
-            state_data?.hide ? animation_classess.close : "",
+            modal_instance?.hide ? animation_classess.close : "",
             givenProps?.props?.container?.className ?? ""
           )}
         >
@@ -49,7 +54,7 @@ export function ModalContainer() {
             )}
           >
             {typeof givenProps?.title == "function" ? (
-              givenProps?.title(ModalReolver)
+              givenProps?.title(ModalResolver)
             ) : (
               <>
                 <span
@@ -70,7 +75,7 @@ export function ModalContainer() {
             )}
           >
             {typeof givenProps?.body == "function" ? (
-              givenProps?.body(ModalReolver)
+              givenProps?.body(ModalResolver)
             ) : (
               <>
                 <p>{givenProps?.body}</p>
@@ -90,12 +95,12 @@ export function ModalContainer() {
                 )}
               >
                 {givenProps?.footer ? (
-                  givenProps?.footer(ModalReolver)
+                  givenProps?.footer(ModalResolver)
                 ) : (
                   <>
                     <button
                       className="btn-primary"
-                      onClick={() => ModalReolver()}
+                      onClick={ModalResolver(instance_id) as any}
                     >
                       CLOSE
                     </button>

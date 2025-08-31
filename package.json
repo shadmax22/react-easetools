@@ -20,16 +20,9 @@
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-usethis": "^0.1.685",
-    "vite-plugin-dts": "^4.0.3",
+    "react-usethis": "^0.1.6918",
+    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-lib-inject-css": "^2.1.1"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs",
-      "types": "./dist/index.d.ts"
-    }
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
