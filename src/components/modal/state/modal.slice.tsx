@@ -6,6 +6,12 @@ export function MODAL_SLICE(state: useThisReturnType<modalStateType>) {
     ...state,
 
     getInstanceList: () => state.get().instance_ids,
+    getActiveInstance: () => {
+      const instances = state.get().instance_ids;
+      const active_instance =
+        instances[instances.length > 0 ? instances.length - 1 : 0];
+      return active_instance;
+    },
 
     getInstance: (instance_id: number) => state.fetch().instances[instance_id],
 
@@ -30,7 +36,7 @@ export function MODAL_SLICE(state: useThisReturnType<modalStateType>) {
         },
         instance_ids: [...pv.instance_ids, instance_id],
 
-        active: instance_id,
+        active_instance: instance_id,
       }));
     },
 
