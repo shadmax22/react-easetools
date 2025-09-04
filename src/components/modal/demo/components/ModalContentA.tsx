@@ -12,7 +12,7 @@ export function ModalContentA() {
 }
 
 async function onClickHandle() {
-  const data = await Modal({
+  await Modal({
     title: "Hello",
     body: (resolver) => <ModalContentB resolver={resolver} />,
   });

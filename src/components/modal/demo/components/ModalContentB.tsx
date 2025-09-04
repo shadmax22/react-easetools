@@ -19,5 +19,3 @@ export function ModalContentB(prop: { resolver: ModalResolverType }) {
     </>
   );
 }
-
-async function onClickHandle() {}

@@ -1,7 +1,7 @@
 {
   "name": "react-easetools",
   "description": "Tools to ease",
-  "version": "0.0.073",
+  "version": "0.0.074",
   "type": "module",
   "publishConfig": {
     "access": "public"
