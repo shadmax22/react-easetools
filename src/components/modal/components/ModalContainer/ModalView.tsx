@@ -1,7 +1,8 @@
 import { setClass } from "../../../../utils/ease";
 import { MODAL_STATE } from "../../state/modal.state";
 import style from "../../style/modal.module.css";
-import { ModalResolver } from "../../utils/modalResolver";
+import { ModalResolverInernal } from "../../utils/modalResolverInternal";
+import { ModalFooter } from "./ModalFooter";
 
 export function ModalView(prop: { instance_id: number }) {
   const { instance_id } = prop;
@@ -18,8 +19,7 @@ export function ModalView(prop: { instance_id: number }) {
 
   if (!modal_instance?.open) return <></>;
 
-  const seeded_modal_resolver = ModalResolver(instance_id);
-  console.log(active_instance, instance_id);
+  const seeded_modal_resolver = ModalResolverInernal(instance_id);
   return (
     <>
       <div
@@ -85,30 +85,11 @@ export function ModalView(prop: { instance_id: number }) {
           </div>
 
           {givenProps?.footer !== null && (
-            <>
-              <div
-                {...givenProps?.props?.footer}
-                className={setClass(
-                  "soft-modal-footer",
-
-                  style["alert-footer"],
-                  givenProps?.props?.footer?.className ?? ""
-                )}
-              >
-                {givenProps?.footer ? (
-                  givenProps?.footer(seeded_modal_resolver)
-                ) : (
-                  <>
-                    <button
-                      className="btn-primary"
-                      onClick={ModalResolver(instance_id) as any}
-                    >
-                      CLOSE
-                    </button>
-                  </>
-                )}
-              </div>
-            </>
+            <ModalFooter
+              givenProps={givenProps}
+              seeded_modal_resolver={seeded_modal_resolver}
+              instance_id={instance_id}
+            ></ModalFooter>
           )}
         </div>
       </div>

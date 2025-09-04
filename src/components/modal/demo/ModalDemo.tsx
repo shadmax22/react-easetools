@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Modal } from "../Modal";
 import { ModalViewer } from "../ModalViewer";
 import { ModalContentA } from "./components/ModalContentA";
@@ -15,7 +16,26 @@ function ModalDemo() {
             onClick={() => {
               Modal({
                 title: "Hello",
-                body: () => <ModalContentA />,
+                body: (resolver) => <ModalContentA />,
+                buttons: [
+                  {
+                    label: "Data",
+                    onClick: async (g) => {
+                      await new Promise((r) =>
+                        setTimeout(() => {
+                          g();
+                          r();
+                        }, 5000)
+                      );
+                    },
+                  },
+                  {
+                    label: "Hello",
+                    onClick: async () => {
+                      await new Promise((r) => setTimeout(r, 5000));
+                    },
+                  },
+                ],
               });
             }}
           >

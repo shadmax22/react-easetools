@@ -24,6 +24,12 @@ export type modalType = {
     open?: string;
     close?: string;
   };
+  buttons?: {
+    label: string;
+    onClick?: (resolver: any) => void;
+    className?: string;
+    variant?: "primary" | "secondary" | "danger";
+  }[];
 };
 
 export type modalInstanceType = {
@@ -44,9 +50,13 @@ export type modalStateType = {
 
 export type ModalCloserType = { data?: any; close?: boolean };
 
+export type ModalResolverInternalType = {
+  (instance_id: number): ModalResolverType;
+};
+
 export type ModalResolverType = {
-  (instance_id: number): (props?: ModalCloserType) => unknown;
-  store: (instance_id: number) => (data: unknown) => boolean;
-  get: (instance_id: number) => () => unknown;
-  close: (instance_id: number) => (props?: ModalCloserType) => unknown;
+  (props?: ModalCloserType): Promise<boolean>;
+  store: (data: unknown) => boolean;
+  get: () => unknown;
+  close: (props?: ModalCloserType) => unknown;
 };
